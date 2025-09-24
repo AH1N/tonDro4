@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+      <style>
+          #Zalupa {
+              position: fixed;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              background: white;
+              z-index: 9999;
+              padding: 10px 20px;
+              text-align: center;
+          }
+          body {
+              padding-top: 50px; /* чтобы контент не перекрывался */
+          }
+      </style>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
   </head>
   <body>
-  <h1>ШТО ЗА ХУЙНЯ!!!</h1>
+  <H1 id="Zalupa">ШТО ЗА ХУЙНЯ!!!</H1>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
