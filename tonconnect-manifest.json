@@ -1,5 +1,6 @@
 {
   "url": "https://ah1n.github.io/tonDro4/",
   "name": "TON FC",
-  "iconUrl": "https://ah1n.github.io/tonDro4/icon.png"
+  "iconUrl": "https://ah1n.github.io/tonDro4/icon.png",
+  "supported_wallets": ["Tonkeeper", "Tonhub"]
 }
