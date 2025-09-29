@@ -31,7 +31,7 @@ function App() {
         <div>тут какакя то хуёня</div>
       <div>
         <div className='Card'>
-          <b>{WebApp.platform}</b>
+          <div>{WebApp.platform}</div>
           <b>Our contract Address</b>
           <div className='Hint'>{contract_address?.slice(0, 30) + "..."}</div>
           <b>Our contract Balance</b>
