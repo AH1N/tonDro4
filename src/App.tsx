@@ -28,6 +28,7 @@ function App() {
       <div>
         <TonConnectButton />
       </div>
+        <div>тут какакя то хуёня</div>
       <div>
         <div className='Card'>
           <b>{WebApp.platform}</b>
