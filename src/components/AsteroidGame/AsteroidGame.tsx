@@ -349,7 +349,8 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
             canvas.removeEventListener('click', handleClick);
             window.removeEventListener('resize', handleResize);
         };
-    }, [createStars, createAsteroids, drawStars, drawAsteroids, checkAsteroidCollision, drawUI, asteroidCount]);
+    // }, [createStars, createAsteroids, drawStars, drawAsteroids, checkAsteroidCollision, drawUI, asteroidCount]);
+    }, []);
 
     return (
         <div className="asteroid-game">
