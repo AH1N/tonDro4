@@ -74,7 +74,7 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
 
     // Создание астероидов
     const createAsteroids = useCallback((canvas: HTMLCanvasElement) => {
-        const numAsteroids = 30;
+        const numAsteroids = 10;
         const asteroids: Asteroid[] = [];
 
         for (let i = 0; i < numAsteroids; i++) {
