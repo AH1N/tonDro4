@@ -120,9 +120,12 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
     }, [random]);
 
     // Отрисовка астероидов
+    // Отрисовка астероидов
     const drawAsteroids = useCallback((ctx: CanvasRenderingContext2D, asteroids: Asteroid[]) => {
         for (let asteroid of asteroids) {
             ctx.beginPath();
+
+            // Используем заранее созданные вершины (фиксированная форма)
             for (let i = 0; i < asteroid.vertices.length; i++) {
                 const vertex = asteroid.vertices[i];
                 const x = asteroid.x + Math.cos(vertex.angle) * vertex.radius;
@@ -138,6 +141,24 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
             ctx.fill();
         }
     }, []);
+    // const drawAsteroids = useCallback((ctx: CanvasRenderingContext2D, asteroids: Asteroid[]) => {
+    //     for (let asteroid of asteroids) {
+    //         ctx.beginPath();
+    //         for (let i = 0; i < asteroid.vertices.length; i++) {
+    //             const vertex = asteroid.vertices[i];
+    //             const x = asteroid.x + Math.cos(vertex.angle) * vertex.radius;
+    //             const y = asteroid.y + Math.sin(vertex.angle) * vertex.radius;
+    //             if (i === 0) {
+    //                 ctx.moveTo(x, y);
+    //             } else {
+    //                 ctx.lineTo(x, y);
+    //             }
+    //         }
+    //         ctx.closePath();
+    //         ctx.fillStyle = asteroid.color;
+    //         ctx.fill();
+    //     }
+    // }, []);
 
     // Проверка столкновений
     const checkAsteroidCollision = useCallback((ball: Ball, asteroids: Asteroid[]) => {
