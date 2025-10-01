@@ -234,11 +234,28 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
         // Обработчик ресайза
         const handleResize = () => {
             if (!canvas) return;
+
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
+            // Только звезды пересоздаем, астероиды остаются на своих местах
             gameState.current.stars = createStars(canvas);
-            gameState.current.asteroids = createAsteroids(canvas);
+
+            // Обновляем позицию шарика если он у края
+            if (gameState.current.ball) {
+                gameState.current.ball.x = Math.min(gameState.current.ball.x, canvas.width - gameState.current.ball.radius);
+                gameState.current.ball.y = Math.min(gameState.current.ball.y, canvas.height - gameState.current.ball.radius);
+                gameState.current.target.x = Math.min(gameState.current.target.x, canvas.width);
+                gameState.current.target.y = Math.min(gameState.current.target.y, canvas.height);
+            }
         };
+        // const handleResize = () => {
+        //     if (!canvas) return;
+        //     canvas.width = window.innerWidth;
+        //     canvas.height = window.innerHeight;
+        //     gameState.current.stars = createStars(canvas);
+        //     gameState.current.asteroids = createAsteroids(canvas);
+        // };
 
         canvas.addEventListener('click', handleClick);
         window.addEventListener('resize', handleResize);
