@@ -3,6 +3,8 @@ import { TonConnectButton } from "@tonconnect/ui-react";
 import { useMainContract } from "./hooks/useMainContract";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { fromNano } from "ton-core";
+import { useState } from "react";
+import AsteroidGame from "./components/AsteroidGame"; // ИМПОРТ КОМПОНЕНТА
 import WebApp from "@twa-dev/sdk";
 
 function App() {
@@ -18,17 +20,45 @@ function App() {
   } = useMainContract();
 
   const { connected } = useTonConnect();
+  const [currentView, setCurrentView] = useState<'contract' | 'game'>('contract'); // СОСТОЯНИЕ ДЛЯ НАВИГАЦИИ
 
   const showAlert = () => {
     WebApp.showAlert("Hey there!");
   };
+
+    // Если показываем игру
+    if (currentView === 'game') {
+        return <AsteroidGame onBack={() => setCurrentView('contract')} />;
+    }
 
   return (
     <div>
       <div>
         <TonConnectButton />
       </div>
-        <div>тут какакя то хуёня</div>
+        {/*<div>-----------------------------------------------------------------------тут какакя то хуёня</div>*/}
+        {/* КНОПКА ДЛЯ ПЕРЕХОДА В ИГРУ */}
+        {connected && (
+            <div style={{ textAlign: 'center', margin: '20px 0' }}>
+                <button
+                    onClick={() => setCurrentView('game')}
+                    style={{
+                        padding: '15px 30px',
+                        fontSize: '18px',
+                        backgroundColor: '#4FC3F7',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '10px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold'
+                    }}
+                >
+                    🎮 Играть в Asteroid Game
+                </button>
+            </div>
+        )}
+        {/*<div>-----------------------------------------------------------------------тут какакя то хуёня</div>*/}
+
       <div>
         <div className='Card'>
           <div>{WebApp.platform}</div>
