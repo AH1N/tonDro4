@@ -74,7 +74,7 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
 
     // Создание астероидов
     const createAsteroids = useCallback((canvas: HTMLCanvasElement) => {
-        const numAsteroids = 700;
+        const numAsteroids = 30;
         const asteroids: Asteroid[] = [];
 
         for (let i = 0; i < numAsteroids; i++) {
@@ -120,23 +120,11 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
     }, [random]);
 
     // Отрисовка астероидов
-    // Отрисовка астероидов
+    // Отрисовка астероидов (упрощенная версия с кругами)
     const drawAsteroids = useCallback((ctx: CanvasRenderingContext2D, asteroids: Asteroid[]) => {
         for (let asteroid of asteroids) {
             ctx.beginPath();
-
-            // Используем заранее созданные вершины (фиксированная форма)
-            for (let i = 0; i < asteroid.vertices.length; i++) {
-                const vertex = asteroid.vertices[i];
-                const x = asteroid.x + Math.cos(vertex.angle) * vertex.radius;
-                const y = asteroid.y + Math.sin(vertex.angle) * vertex.radius;
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            }
-            ctx.closePath();
+            ctx.arc(asteroid.x, asteroid.y, asteroid.size, 0, Math.PI * 2);
             ctx.fillStyle = asteroid.color;
             ctx.fill();
         }
