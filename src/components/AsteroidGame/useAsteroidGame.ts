@@ -58,12 +58,27 @@ export const useAsteroidGame = ({ onAsteroidCollected }: UseAsteroidGameProps) =
     const gameState = useRef<GameState>({
         stars: [],
         asteroids: [],
-        ball: null,
+        ball: { // Обязательно инициализируем ball
+            x: 0,
+            y: 0,
+            radius: BALL_RADIUS,
+            speedX: 0,
+            speedY: 0
+        },
         moving: false,
         target: { x: 0, y: 0 },
         animationId: null,
         currentAsteroidCount: 0
     });
+    // const gameState = useRef<GameState>({
+    //     stars: [],
+    //     asteroids: [],
+    //     ball: null,
+    //     moving: false,
+    //     target: { x: 0, y: 0 },
+    //     animationId: null,
+    //     currentAsteroidCount: 0
+    // });
 
     const random = useCallback((min: number, max: number): number => {
         return min + Math.random() * (max - min);
@@ -143,19 +158,20 @@ export const useAsteroidGame = ({ onAsteroidCollected }: UseAsteroidGameProps) =
     }, []);
 
     const gameLoop = useCallback((canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
-        if (!gameState.current.ball) return;
-
         const animate = () => {
+            // Проверяем что ball существует
+            if (!gameState.current.ball) return;
+
             // Очистка и отрисовка
             RenderingSystem.clearCanvas(ctx, canvas);
             StarSystem.updateStars(gameState.current.stars, random);
             StarSystem.drawStars(ctx, gameState.current.stars);
             AsteroidSystem.drawAsteroids(ctx, gameState.current.asteroids);
-            RenderingSystem.drawBall(ctx, gameState.current.ball!);
+            RenderingSystem.drawBall(ctx, gameState.current.ball);
 
             // Коллизии
             gameState.current.asteroids = CollisionSystem.checkAsteroidCollisions(
-                gameState.current.ball,
+                gameState.current.ball, // Теперь точно не null
                 gameState.current.asteroids,
                 (collected) => {
                     gameState.current.currentAsteroidCount += collected;
@@ -175,6 +191,39 @@ export const useAsteroidGame = ({ onAsteroidCollected }: UseAsteroidGameProps) =
 
         return animate;
     }, [random, updateGameLogic, checkBoundaries, onAsteroidCollected]);
+    // const gameLoop = useCallback((canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+    //     if (!gameState.current.ball) return;
+    //
+    //     const animate = () => {
+    //         // Очистка и отрисовка
+    //         RenderingSystem.clearCanvas(ctx, canvas);
+    //         StarSystem.updateStars(gameState.current.stars, random);
+    //         StarSystem.drawStars(ctx, gameState.current.stars);
+    //         AsteroidSystem.drawAsteroids(ctx, gameState.current.asteroids);
+    //         RenderingSystem.drawBall(ctx, gameState.current.ball!);
+    //
+    //         // Коллизии
+    //         gameState.current.asteroids = CollisionSystem.checkAsteroidCollisions(
+    //             gameState.current.ball,
+    //             gameState.current.asteroids,
+    //             (collected) => {
+    //                 gameState.current.currentAsteroidCount += collected;
+    //                 onAsteroidCollected(collected);
+    //             }
+    //         );
+    //
+    //         // Логика игры
+    //         updateGameLogic(gameState.current.ball);
+    //         checkBoundaries(gameState.current.ball, canvas);
+    //
+    //         // UI
+    //         RenderingSystem.drawUI(ctx, gameState.current.currentAsteroidCount);
+    //
+    //         gameState.current.animationId = requestAnimationFrame(animate);
+    //     };
+    //
+    //     return animate;
+    // }, [random, updateGameLogic, checkBoundaries, onAsteroidCollected]);
 
     return {
         gameState,

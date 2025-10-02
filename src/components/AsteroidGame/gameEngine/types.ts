@@ -25,12 +25,21 @@ export interface Ball {
 export interface GameState {
     stars: Star[];
     asteroids: Asteroid[];
-    ball: Ball | null;
+    ball: Ball; // Убрали | null
     moving: boolean;
     target: { x: number; y: number };
     animationId: number | null;
     currentAsteroidCount: number;
 }
+// export interface GameState {
+//     stars: Star[];
+//     asteroids: Asteroid[];
+//     ball: Ball | null;
+//     moving: boolean;
+//     target: { x: number; y: number };
+//     animationId: number | null;
+//     currentAsteroidCount: number;
+// }
 
 export interface GameConfig {
     canvas: HTMLCanvasElement;

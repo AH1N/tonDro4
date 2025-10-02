@@ -70,8 +70,13 @@ const AsteroidGame: React.FC<AsteroidGameProps> = ({ onBack }) => {
         window.addEventListener('resize', handleResize);
 
         // Запускаем игровой цикл
+        //  const animate = gameLoop(canvas, ctx);
+        //  gameState.current.animationId = requestAnimationFrame(animate);
+
         const animate = gameLoop(canvas, ctx);
-        gameState.current.animationId = requestAnimationFrame(animate);
+        if (animate) {
+            gameState.current.animationId = requestAnimationFrame(animate);
+        }
 
         // Очистка
         return () => {
